@@ -25,17 +25,17 @@
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 
-                <div class="bg-white p-6 rounded-2xl shadow">
+                <div class="bg-white p-6 rounded-2xl shadow" onmouseover="mouseOver(this)" onmouseout="mouseOut(this)">
                     <p>Total Jobs</p>
                     <p id="totalCount" class="text-2xl font-bold">0</p>
                 </div>
 
-                <div class="bg-white p-6 rounded-2xl shadow">
+                <div class="bg-white p-6 rounded-2xl shadow" onmouseover="mouseOver(this)" onmouseout="mouseOut(this)">
                     <p>Interview</p>
                     <p id="interviewCount" class="text-2xl font-bold text-green-600">0</p>
                 </div>
 
-                <div class="bg-white p-6 rounded-2xl shadow">
+                <div class="bg-white p-6 rounded-2xl shadow" onmouseover="mouseOver(this)" onmouseout="mouseOut(this)">
                     <p>Rejected</p>
                     <p id="rejectCount" class="text-2xl font-bold text-red-600">0</p>
                 </div>
@@ -46,21 +46,21 @@
         <!-- AVAILABLE  JOBS -->
         <div>
 
-            <div class="flex justify-between items-center mb-4">
+            <div class="flex justify-between items-center mb-4" onmouseover="mouseOver(this)" onmouseout="mouseOut(this)">
                 <h2 class="text-xl font-bold">Available Jobs</h2>
                 <p id="sectionCount">0<< /p>
             </div>
 
            <div class="flex gap-3 mb-6">
-                <button id="allBtn" onclick="showAll()" class="px-4 py-2 rounded">
+                <button id="allBtn" onclick="showAll()" class="px-4 py-2 rounded" onmouseover="mouseOver(this)" onmouseout="mouseOut(this)">
                     All (<span id="allTab">0</span>)
                 </button>
 
-                <button id="interviewBtn" onclick="showInterview()" class="px-4 py-2 rounded">
+                <button id="interviewBtn" onclick="showInterview()" class="px-4 py-2 rounded" onmouseover="mouseOver(this)" onmouseout="mouseOut(this)">
                     Interview (<span id="interviewTab">0</span>)
                 </button>
 
-                <button id="rejectBtn" onclick="showRejected()" class="px-4 py-2 rounded">
+                <button id="rejectBtn" onclick="showRejected()" class="px-4 py-2 rounded" onmouseover="mouseOver(this)" onmouseout="mouseOut(this)">
                     Rejected (<span id="rejectTab">0</span>)
                 </button>
             </div>

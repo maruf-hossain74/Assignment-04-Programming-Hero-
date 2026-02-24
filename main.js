@@ -85,7 +85,7 @@ function renderJobs() {
 
     if(filteredJobs.length === 0) {
         container.innerHTML = `
-            <div class="col-span-2 text-center py-16 w-[1110px] h-[400px] bg-white">
+            <div class="col-span-2 text-center py-16 w-[1110px] h-[400px] bg-white" >
             <img src="jobs.png" alt="No Jobs" class="w-24 mx-auto mb-4 opacity-70">
             <p class="text-lg font-semibold">No Jobs Available</p>
             <p class="text-gray-500">Check back soon for new job opportunities</p>
@@ -99,7 +99,7 @@ function renderJobs() {
         const realIndex = jobs.indexOf(job);
 
         container.innerHTML += `
-        <div class="bg-white p-6 rounded-xl shadow relative">
+        <div class="bg-white p-6 rounded-xl shadow relative" onmouseover="mouseOver(this)" onmouseout="mouseOut(this)">
             <button onclick="deleteJob(${realIndex})" class="absolute top-4 right-4 text-[#64748B] border border-gray-200 rounded-[50%] bg-white"> <i class="fa-solid fa-trash"></i> </button>
             <h3 class="font-bold">${job.company}</h3>
             <p class="text-sm text-gray-500 pb-4">${job.position}</p>
@@ -129,6 +129,13 @@ function renderJobs() {
     updateActiveTabUI();
 }
 
+function mouseOver(element) {
+    element.style.transform = "translateY(-5px)";
+    element.style.transition = "transform 0.3s";
+}
+function mouseOut(element) {
+    element.style.transform = "translateY(0)";
+}
 function renderStatusBadge(status) {
     if(status === "interview") return `<div class="mt-3 inline-block bg-green-100 text-green-600 px-2 py-1 rounded text-sm">INTERVIEW</div>`;
     if(status === "rejected") return `<div class="mt-3 inline-block bg-red-100 text-red-600 px-2 py-1 rounded text-sm">REJECTED</div>`;
