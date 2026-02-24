@@ -96,35 +96,45 @@ function renderJobs() {
     }
 
     filteredJobs.forEach((job) => {
-        const realIndex = jobs.indexOf(job);
+    const realIndex = jobs.indexOf(job);
 
-        container.innerHTML += `
-        <div class="bg-white p-6 rounded-xl shadow relative" onmouseover="mouseOver(this)" onmouseout="mouseOut(this)">
-            <button onclick="deleteJob(${realIndex})" class="absolute top-4 right-4 text-[#64748B] border border-gray-200 rounded-[50%] bg-white"> <i class="fa-solid fa-trash"></i> </button>
-            <h3 class="font-bold">${job.company}</h3>
-            <p class="text-sm text-gray-500 pb-4">${job.position}</p>
-            <p class="text-sm text-gray-500"> ${job.location} • ${job.type} • ${job.salary} </p>
-            ${renderStatusBadge(job.status)}
-            <p class="text-sm mt-2">${job.description}</p>
-            <div class="flex gap-3 mt-4">
-                <button 
-                    onclick="setStatus(${realIndex}, 'interview')" 
-                    class="px-3 py-1 border rounded 
-                    ${job.status === 'interview'? 'bg-green-100 text-green-600 border-green-600' : 'border-green-600 text-green-600'}">
-                    Interview
-                </button>
+    // Determine left border class based on status
+    let borderClass = "";
+    if(job.status === "interview") borderClass = "border-l-4 border-green-600";
+    else if(job.status === "rejected") borderClass = "border-l-4 border-red-600";
 
-                <button 
-                    onclick="setStatus(${realIndex}, 'rejected')" 
-                    class="px-3 py-1 border rounded 
-                    ${job.status === 'rejected' ? 'bg-red-100 text-red-600 border-red-600' : 'border-red-600 text-red-600'}">
-                    Rejected
-                </button>
-            </div>
+    container.innerHTML += `
+    <div class="bg-white p-6 rounded-xl shadow relative ${borderClass}" onmouseover="mouseOver(this)" onmouseout="mouseOut(this)">
+        <button onclick="deleteJob(${realIndex})" 
+            class="absolute top-4 right-4 text-[#64748B] border border-gray-200 rounded-[50%] bg-white"> <i class="fa-solid fa-trash"></i> 
+        </button>
 
-        </div>`;
+        <h3 class="font-bold">${job.company}</h3>
+        <p class="text-sm text-gray-500 pb-4">${job.position}</p>
+        <p class="text-sm text-gray-500"> ${job.location} • ${job.type} • ${job.salary} </p>
+        
+        ${renderStatusBadge(job.status)}
+        
+        <p class="text-sm mt-2 text-gray-500">${job.description}</p>
+        
+        <div class="flex gap-3 mt-4">
+            <button 
+                onclick="setStatus(${realIndex}, 'interview')" 
+                class="px-3 py-1 border rounded 
+                ${job.status === 'interview'? 'bg-green-100 text-green-600 border-green-600' : 'border-green-600 text-green-600'}">
+                Interview
+            </button>
+
+            <button 
+                onclick="setStatus(${realIndex}, 'rejected')" 
+                class="px-3 py-1 border rounded 
+                ${job.status === 'rejected' ? 'bg-red-100 text-red-600 border-red-600' : 'border-red-600 text-red-600'}">
+                Rejected
+            </button>
+        </div>
+
+    </div>`;
     });
-
     updateCounts();
     updateActiveTabUI();
 }
