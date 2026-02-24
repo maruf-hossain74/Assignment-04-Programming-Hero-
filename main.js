@@ -102,7 +102,7 @@ function renderJobs() {
         <div class="bg-white p-6 rounded-xl shadow relative">
             <button onclick="deleteJob(${realIndex})" class="absolute top-4 right-4 text-[#64748B] border border-gray-200 rounded-[50%] bg-white"> <i class="fa-solid fa-trash"></i> </button>
             <h3 class="font-bold">${job.company}</h3>
-            <p class="font-semibold">${job.position}</p>
+            <p class="text-sm text-gray-500 pb-4">${job.position}</p>
             <p class="text-sm text-gray-500"> ${job.location} • ${job.type} • ${job.salary} </p>
             ${renderStatusBadge(job.status)}
             <p class="text-sm mt-2">${job.description}</p>
@@ -130,9 +130,9 @@ function renderJobs() {
 }
 
 function renderStatusBadge(status) {
-    if(status === "interview") return `<div class="mt-3 inline-block bg-green-100 text-green-600 px-2 py-1 rounded text-sm">Interview</div>`;
-    if(status === "rejected") return `<div class="mt-3 inline-block bg-red-100 text-red-600 px-2 py-1 rounded text-sm">Rejected</div>`;
-    return `<div class="mt-3 inline-block bg-gray-100 text-gray-500 px-2 py-1 rounded text-sm disable">Not Selected</div>`;
+    if(status === "interview") return `<div class="mt-3 inline-block bg-green-100 text-green-600 px-2 py-1 rounded text-sm">INTERVIEW</div>`;
+    if(status === "rejected") return `<div class="mt-3 inline-block bg-red-100 text-red-600 px-2 py-1 rounded text-sm">REJECTED</div>`;
+    return `<div class="mt-3 inline-block bg-gray-100 text-gray-500 px-2 py-1 rounded text-sm disable">NOT APPLIED</div>`;
     //return;
 }
 
