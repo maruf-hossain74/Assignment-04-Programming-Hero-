@@ -115,7 +115,7 @@ function renderJobs() {
         
         ${renderStatusBadge(job.status)}
         
-        <p class="text-sm mt-2 text-gray-500">${job.description}</p>
+        <p class="text-sm mt-2">${job.description}</p>
         
         <div class="flex gap-3 mt-4">
             <button 
