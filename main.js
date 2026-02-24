@@ -80,13 +80,10 @@ function renderJobs() {
 
     let filteredJobs;
 
-    if (currentTab === "all") {
-        filteredJobs = jobs;
-    } else {
-        filteredJobs = jobs.filter(job => job.status === currentTab);
-    }
+    if(currentTab === "all") filteredJobs = jobs;
+    else filteredJobs = jobs.filter(job => job.status === currentTab);
 
-    if (filteredJobs.length === 0) {
+    if(filteredJobs.length === 0) {
         container.innerHTML = `
             <div class="col-span-2 text-center py-16 w-[1110px] h-[400px] bg-white">
             <img src="jobs.png" alt="No Jobs" class="w-24 mx-auto mb-4 opacity-70">
@@ -94,6 +91,7 @@ function renderJobs() {
             <p class="text-gray-500">Check back soon for new job opportunities</p>
         </div>`;
         updateCounts();
+        updateActiveTabUI();
         return;
     }
 
@@ -102,36 +100,24 @@ function renderJobs() {
 
         container.innerHTML += `
         <div class="bg-white p-6 rounded-xl shadow relative">
-            
-            <button onclick="deleteJob(${realIndex})" 
-                class="absolute top-4 right-4 text-red-500">
-                <i class="fa-solid fa-trash"></i>
-            </button>
-
+            <button onclick="deleteJob(${realIndex})" class="absolute top-4 right-4 text-[#64748B] border border-gray-200 rounded-[50%] bg-white"> <i class="fa-solid fa-trash"></i> </button>
             <h3 class="font-bold">${job.company}</h3>
             <p class="font-semibold">${job.position}</p>
-            <p class="text-sm text-gray-500">
-                ${job.location} • ${job.type} • ${job.salary}
-            </p>
-            <p class="text-sm mt-2">${job.description}</p>
-
+            <p class="text-sm text-gray-500"> ${job.location} • ${job.type} • ${job.salary} </p>
             ${renderStatusBadge(job.status)}
-
+            <p class="text-sm mt-2">${job.description}</p>
             <div class="flex gap-3 mt-4">
                 <button 
                     onclick="setStatus(${realIndex}, 'interview')" 
                     class="px-3 py-1 border rounded 
-                    ${job.status === 'interview'
-                ? 'bg-green-100 text-green-600 border-green-600'
-                : 'border-green-600 text-green-600'}">
+                    ${job.status === 'interview'? 'bg-green-100 text-green-600 border-green-600' : 'border-green-600 text-green-600'}">
                     Interview
                 </button>
 
                 <button 
                     onclick="setStatus(${realIndex}, 'rejected')" 
                     class="px-3 py-1 border rounded 
-                    ${job.status === 'rejected'
-                ? 'bg-red-100 text-red-600 border-red-600' : 'border-red-600 text-red-600'}">
+                    ${job.status === 'rejected' ? 'bg-red-100 text-red-600 border-red-600' : 'border-red-600 text-red-600'}">
                     Rejected
                 </button>
             </div>
@@ -140,33 +126,49 @@ function renderJobs() {
     });
 
     updateCounts();
+    updateActiveTabUI();
 }
 
 function renderStatusBadge(status) {
-    if (status === "interview") {
-        return `<div class="mt-3 inline-block bg-green-100 text-green-600 px-2 py-1 rounded text-sm">Interview</div>`;
-    }
-
-    if (status === "rejected") {
-        return `<div class="mt-3 inline-block bg-red-100 text-red-600 px-2 py-1 rounded text-sm">Rejected</div>`;
-    }
+    if(status === "interview") return `<div class="mt-3 inline-block bg-green-100 text-green-600 px-2 py-1 rounded text-sm">Interview</div>`;
+    if(status === "rejected") return `<div class="mt-3 inline-block bg-red-100 text-red-600 px-2 py-1 rounded text-sm">Rejected</div>`;
     return `<div class="mt-3 inline-block bg-gray-100 text-gray-500 px-2 py-1 rounded text-sm disable">Not Selected</div>`;
     //return;
 }
 
 function setStatus(index, status) {
-    if (jobs[index].status === status) {
-        jobs[index].status = "none";
-    } else {
-        jobs[index].status = status;
-    }
-
+    if(jobs[index].status === status) jobs[index].status = "none";
+    else jobs[index].status = status;
     renderJobs();
 }
 
 function deleteJob(index) {
     jobs.splice(index, 1);
     renderJobs();
+}
+
+function updateActiveTabUI() {
+    const allBtn = document.getElementById("allBtn");
+    const interviewBtn = document.getElementById("interviewBtn");
+    const rejectBtn = document.getElementById("rejectBtn");
+
+    [allBtn, interviewBtn, rejectBtn].forEach(btn => {
+        btn.classList.remove("bg-blue-500", "text-white");
+        btn.classList.add("bg-white", "text-gray-500");
+    });
+
+    if(currentTab === "all") {
+        allBtn.classList.remove("bg-white", "text-gray-500");
+        allBtn.classList.add("bg-blue-500", "text-white");
+    }
+    if(currentTab === "interview") {
+        interviewBtn.classList.remove("bg-white", "text-gray-500");
+        interviewBtn.classList.add("bg-blue-500", "text-white");
+    }
+    if(currentTab === "rejected") {
+        rejectBtn.classList.remove("bg-white", "text-gray-500");
+        rejectBtn.classList.add("bg-blue-500", "text-white");
+    }
 }
 
 function updateCounts() {
@@ -178,8 +180,12 @@ function updateCounts() {
     document.getElementById("interviewCount").innerText = interview;
     document.getElementById("rejectCount").innerText = rejected;
 
-    document.getElementById("sectionCount").innerText = total;
+    let sectionText = "";
+    if(currentTab === "all") sectionText = `Total: ${total} Jobs`;
+    if(currentTab === "interview") sectionText = `${interview} of ${total} Jobs`;
+    if(currentTab === "rejected") sectionText = `${rejected} of ${total} Jobs`;
 
+    document.getElementById("sectionCount").innerText = sectionText;
     document.getElementById("allTab").innerText = total;
     document.getElementById("interviewTab").innerText = interview;
     document.getElementById("rejectTab").innerText = rejected;
@@ -201,3 +207,4 @@ function showRejected() {
 }
 
 renderJobs();
+updateActiveTabUI();
